@@ -42,7 +42,7 @@ for fragment in transcript.iter('Fragment'):
         timestamper = Timestamper(fragment.get('StartTime'))
 
     output['fragments'].append({
-        'start_time': timestamper(fragment.get('StartTime')),
+        'offset': timestamper(fragment.get('StartTime')),
         'text': fragment.text
     })
 
@@ -50,7 +50,11 @@ response = requests.get(NPR_API_URL)
 
 data = json.loads(response.content)
 
-output['mp3_url'] = data['list']['story'][0]['audio'][0]['format']['mp3'][0]['$text']
+m3u_url = data['list']['story'][0]['audio'][0]['format']['mp3'][0]['$text']
+
+response = requests.get(m3u_url)
+
+output['mp3_url'] = response.content
 
 with open('www/transcript.js', 'w') as f:
     json.dump(output, f)
