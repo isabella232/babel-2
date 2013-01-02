@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from datetime import datetime, date, time
 import json
 import os
 from xml.etree import ElementTree
@@ -12,6 +13,17 @@ ARTEMIS_API_URL = 'http://artemis.npr.org/dma/api/stories/seamus/%s' % SEAMUS_ID
 NPR_API_KEY = os.environ.get('NPR_API_KEY')
 NPR_API_URL = 'http://api.npr.org/query?id=%s&dateType=story&output=JSON&apiKey=%s' % (SEAMUS_ID, NPR_API_KEY)
 
+class Timestamper(object):
+    def __init__(self, start):
+        self.start = time(*map(int, start.split(':')))
+
+    def __call__(self, marker):
+        t = time(*map(int, marker.split(':')))
+        
+        delta = datetime.combine(date.today(), t) - datetime.combine(date.today(), self.start)
+
+        return delta.seconds 
+
 response = requests.get(ARTEMIS_API_URL)
 
 data = json.loads(response.content)['hits'][0]['_source']
@@ -23,9 +35,14 @@ output = {
     'fragments': []
 }
 
+timestamper = None
+
 for fragment in transcript.iter('Fragment'):
+    if not timestamper:
+        timestamper = Timestamper(fragment.get('StartTime'))
+
     output['fragments'].append({
-        'start_time': fragment.get('StartTime'),
+        'start_time': timestamper(fragment.get('StartTime')),
         'text': fragment.text
     })
 
