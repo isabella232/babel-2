@@ -1,10 +1,10 @@
 <li id="fragment-<%= slug %>" data-offset="<%= offset %>">
 <p class="speaker"><% if (speaker['title']) { %><%= speaker['title'] %> <% } %><%= speaker['name'] %><% if (speaker['description']) { %> (<%= speaker['description'] %>)<% } %></p>
-    <p><%= text %></p>
+<p class="quote"><%= text %></p>
 
 <% if (speaker['related'].length > 0) { %>
 <div class="related-stories">
-<h4>Other stories with this speaker:</h4>
+<h4>Other stories with <%= speaker['name'] %>:</h4>
 <ul class="related">
 <% _.each(speaker['related'], function(related) { %>
 <li><a href="<%= related['url'] %>"><%= related['title'] %></a></li>
