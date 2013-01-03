@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from datetime import datetime, date, time
+import datetime 
 import json
+import time
 from xml.etree import ElementTree
 
 import requests
@@ -11,12 +12,12 @@ ARTEMIS_API_URL = 'http://artemis.npr.org/dma/api/stories/seamus/%s' % SEAMUS_ID
 
 class Timestamper(object):
     def __init__(self, start):
-        self.start = time(*map(int, start.split(':')))
+        self.start = datetime.time(*map(int, start.split(':')))
 
     def __call__(self, marker):
-        t = time(*map(int, marker.split(':')))
+        t = datetime.time(*map(int, marker.split(':')))
         
-        delta = datetime.combine(date.today(), t) - datetime.combine(date.today(), self.start)
+        delta = datetime.datetime.combine(datetime.date.today(), t) - datetime.datetime.combine(datetime.date.today(), self.start)
 
         return delta.seconds 
 
@@ -25,11 +26,15 @@ response = requests.get(ARTEMIS_API_URL)
 data = json.loads(response.content)
 story = data['hits'][0]['_source']
 
+program_date = story['episode']['show_date']
+month, day, year = map(int, program_date.split('/'))
+program_date = datetime.datetime(year, month, day).strftime('%B %d, %Y')
+
 output = {
     'id': story['web_container'][0]['web_seamus_id1'],
     'title': story['story_title'],
     'program': story['program'][0],
-    'program_date': story['episode']['show_date'],
+    'program_date': program_date,
     'mp3_url': story['audio_file_preview'][0],
     'speakers': [],
     'turns': []
