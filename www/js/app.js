@@ -1,9 +1,10 @@
 $(function() {
     var $player = $('#pop-audio');
+    var $title = $('h1');
+    var $transcript = $('#transcript');
 
+    // Setup jplayer
     $player.jPlayer({
-        ready: function () {
-        },
         ended: function (event) {
             $(this).jPlayer("pause");
         },
@@ -11,12 +12,15 @@ $(function() {
         supplied: "mp3"
     });
 
-    // associate jPlayer with Popcorn
+    // Setup popcorn
     pop = Popcorn('#jp_audio_0');
 
-	function load_transcript() {
+	function init() {
+        /*
+         * Fetch the transcript json and render it.
+         */
 		$.getJSON('transcript.json', function(transcript) {
-            $('h1').text(transcript['title']);
+            $title.text(transcript['title']);
 
             $player.jPlayer('setMedia', {
                 mp3: transcript['mp3_url'] 
@@ -27,7 +31,7 @@ $(function() {
 
                 $.each(turn['fragments'], function(k2, fragment) {
                     var html = JST.fragment($.extend({}, fragment, { 'speaker': speaker }));
-                    var $fragment = $(html).appendTo($('#transcript'));
+                    var $fragment = $(html).appendTo($transcript);
 
                     pop.code({
                         start: fragment['offset'],
@@ -37,13 +41,12 @@ $(function() {
                             $fragment.css('background-color', '#fcc');
 
                             return false;
-                        },
-                        onEnd: function( options ) {}
+                        } 
                     });
                 });
 			});
 
-            $('#transcript li').click(function() {
+            $transcript.find('li').click(function() {
                 var offset = $(this).data('offset');
 
                 $player.jPlayer('play', offset);
@@ -51,5 +54,5 @@ $(function() {
         });
 	}
 
-    load_transcript();
+    init();
 });
