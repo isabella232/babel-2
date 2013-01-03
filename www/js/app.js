@@ -1,5 +1,12 @@
 $(function() {
-    var slug = window.location.hash.replace('#', '');
+    var hash = window.location.hash.replace('#', '');
+    var story_id = hash.split('/')[0];
+    var slug = hash.split('/')[1];
+
+    if (!story_id) {
+        story_id = '167664846';
+        window.location.hash = '#' + story_id;
+    }
 
     var $player = $('#pop-audio');
     var $title = $('h1');
@@ -23,7 +30,7 @@ $(function() {
         /*
          * Fetch the transcript json and render it.
          */
-		$.getJSON('transcript.json', function(transcript) {
+		$.getJSON('transcripts/' + story_id + '.json', function(transcript) {
             $title.text(transcript['title']);
             $program_name.text(transcript['program']);
 
@@ -43,7 +50,7 @@ $(function() {
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function(options) {         
-                            window.location.hash = '#' + fragment['slug'];
+                            window.location.hash = '#' + story_id + '/' + fragment['slug'];
                             $('#transcript p.quote').removeClass('active');
                             $fragment.addClass('active');
                             return false;
