@@ -87,26 +87,19 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	float: left;
 	height: 88px;
 	position: relative;
-	padding-left: 22px;
 	
-	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; color: #6d8ac4; cursor: pointer; }
+	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; color: #6d8ac4; cursor: pointer; padding-left: 22px; }
 	h3:hover, h3:active { color: #bccae5; }
+	#program-name { float: left; padding-left: 22px; font-size: 11px; font-weight: bold; color: #999; }
+	.jp-current-time { float: right; font-size: 11px; font-weight: bold; color: #999; }
 }
+
 .jp-progress-container {
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	top: 0; left: 0; 
 }
-#program-name,
-.jp-current-time {
-	font-size: 11px;
-	font-weight: bold;
-	color: #999;
-}
-#program-name { float: left; }
-.jp-current-time { float: right; }
-
 
 // Transcript
 #transcript {
@@ -119,29 +112,12 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	margin-bottom: 30px;
 
 	li { position: relative; }
+
 	p { margin: 0; font-size: 14px; }
-	p.speaker { color: #4774cc; font-size: 13px; padding-left: 10px; padding-top: 15px; }
-}
-#transcript p.quote {
-	padding: 10px;
-	cursor: pointer;
-	position: relative;
-	border-left: 3px solid #fff;
-}
-#transcript p.quote:hover {
-	border-color: #bccae5;
-}
-#transcript .active {
-	background-color: #eee;
-	border-color: #bccae5;
-}
-#transcript .active.quote {
-	color: #333;
-	border-color: #bccae5;
-}
-#transcript .active p.speaker {
-	font-weight: normal;
-	color: #555;
+	p.speaker { color: #4774cc; font-size: 13px; padding-left: 12px; padding-top: 15px; }
+ 	p.quote { padding: 10px; cursor: pointer; position: relative; border-left: 3px solid #fff; }
+	p.quote:hover { border-color: #bccae5; }
+	p.quote.active { background-color: #eee; border-color: #bccae5; color: #333; }
 }
 #transcript .related-stories {
 	position: absolute;
