@@ -106,18 +106,62 @@ a, a:link, a:visited { color: #4774cc; }
 	margin: 0;
 	padding: 0;
 	color: #666;
+	width: 75%;
+	margin-left: 25%;
+	margin-bottom: 30px;
 }
 #transcript li {
 	padding: 20px;
 	cursor: pointer;
+	position: relative;
 }
 #transcript p {
 	margin: 0;
 }
+#transcript p.speaker {
+	color: #999;
+	font-size: 18px;
+	margin-bottom: 11px;
+}
 #transcript .active {
 	background-color: #F7E39B;
 	font-weight: bold;
-	color: #111;
+	color: #333;
+}
+#transcript .active p.speaker {
+	font-weight: normal;
+	color: #77631B;
+}
+#transcript .related-stories {
+	position: absolute;
+	top: 23px; left: 0;
+	margin-left: -300px;
+	width: 270px;
+}
+#transcript .related-stories h4 {
+	color: #666;
+	text-transform: lowercase;
+	margin-bottom: 15px;
+	font: bold 12px Arial;
+}
+#transcript .related-stories ul {
+	list-style: none;
+	margin: 0; padding: 0;
+}
+#transcript .related-stories li {
+	padding: 0 0 0 16px;
+	background: url('http://media.npr.org/chrome/news/bullet_5x5.png') no-repeat left 6px;
+	font-size: 12px;
+	margin-bottom: 11px;
+}
+
+
+.footnote {
+	font-style: italic;
+	font-size: 90%;
+	color: #666;
+	width: 75%;
+	margin-left: 25%;
 }
 
 
