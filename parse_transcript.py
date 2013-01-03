@@ -25,10 +25,8 @@ response = requests.get(ARTEMIS_API_URL)
 data = json.loads(response.content)
 story = data['hits'][0]['_source']
 
-transcript = ElementTree.fromstring(story['transcript_text'][0].encode('utf-8'))
-
 output = {
-    'id': transcript.get('Id'),
+    'id': story['web_container'][0]['web_seamus_id1'],
     'title': story['story_title'],
     'program': story['program'][0],
     'mp3_url': story['audio_file_preview'][0],
@@ -37,6 +35,7 @@ output = {
 }
 
 timestamper = None
+transcript = ElementTree.fromstring(story['transcript_text'][0].encode('utf-8'))
 
 for turn in transcript.iter('Turn'):
     speaker = turn.get('Speaker')
@@ -66,10 +65,13 @@ for turn in transcript.iter('Turn'):
     output['turns'].append(output_turn)
 
 for speaker in output['speakers']:
-    if speaker['description'] == 'HOST':
-        url =  'http://artemis-stage.npr.org/dma/api/stories/?host=' + speaker['name']
-    else:
+    if speaker['description'] in ['HOST', 'BYLINE']:
         continue
+
+    if speaker['name'].startswith('UNIDENTIFIED'):
+        continue
+    
+    url =  'http://artemis-stage.npr.org/dma/api/stories/?name=' + speaker['name']
 
     response = requests.get(url)
 
@@ -78,11 +80,9 @@ for speaker in output['speakers']:
     for story in data['hits']:
         story = story['_source'] 
 
-        transcript = ElementTree.fromstring(story['transcript_text'][0].encode('utf-8'))
-
         speaker['related'].append({
             'title': story['story_title'],
-            'url': 'npr.org/templates/story/story.php?storyId=' + transcript.get('Id')
+            'url': 'http://npr.org/templates/story/story.php?storyId=' + story['web_container'][0]['web_seamus_id1']
         })
 
 
