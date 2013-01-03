@@ -37,8 +37,8 @@ $(function() {
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function( options ) {         
-                            $('#transcript li').css('background-color', '#fff');
-                            $fragment.css('background-color', '#fcc');
+                            $('#transcript li').removeClass('active');
+                            $fragment.addClass('active');
 
                             return false;
                         } 

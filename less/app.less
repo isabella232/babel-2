@@ -43,6 +43,7 @@ a, a:link, a:visited { color: #4774cc; }
 .the-goods h1 {
 	font-size: 32px;
 	font-weight: normal;
+	margin-bottom: 30px;
 }
 
 
@@ -83,15 +84,19 @@ a, a:link, a:visited { color: #4774cc; }
 	height: 88px;
 	position: relative;
 	padding-left: 22px;
-	padding-top: 17px;
 	
-	h3 { font-family: Arial; font-size: 20px; color: #333; }
+	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; }
 }
 .jp-progress-container {
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	top: 0; left: 0; 
+}
+.jp-current-time {
+	font-size: 11px;
+	font-weight: bold;
+	color: #999;
 }
 
 
@@ -100,6 +105,19 @@ a, a:link, a:visited { color: #4774cc; }
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	color: #666;
+}
+#transcript li {
+	padding: 20px;
+	cursor: pointer;
+}
+#transcript p {
+	margin: 0;
+}
+#transcript .active {
+	background-color: #F7E39B;
+	font-weight: bold;
+	color: #111;
 }
 
 
