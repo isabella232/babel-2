@@ -1,11 +1,7 @@
 $(function() {
-    var hash = window.location.hash.replace('#', '');
-    var story_id = hash.split('/')[0];
-    var slug = hash.split('/')[1];
-
-    if (!story_id) {
+    /*if (!story_id) {
         story_id = '167664846';
-    }
+    }*/
 
     var $player = $('#pop-audio');
     var $title = $('h1');
@@ -26,7 +22,7 @@ $(function() {
     // Setup popcorn
     pop = Popcorn('#jp_audio_0');
 
-	function init() {
+	function init(story_id, slug) {
         /*
          * Fetch the transcript json and render it.
          */
@@ -40,6 +36,8 @@ $(function() {
             }).jPlayer("pause");
 
             var previous_speaker = {};
+
+            $transcript.empty();
 
 			$.each(transcript['turns'], function(k, turn) {
                 var speaker_id = turn['speaker_id'];
@@ -55,7 +53,8 @@ $(function() {
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function(options) {         
-                            window.location.hash = '#' + story_id + '/' + fragment['slug'];
+                            router.navigate('#' + story_id + '/' + fragment['slug']);
+
                             $('#transcript p.quote').removeClass('active');
                             $fragment.addClass('active');
                             return false;
@@ -81,5 +80,17 @@ $(function() {
 		});
 	}
 
-    init();
+    var TranscriptRouter = Backbone.Router.extend({
+        routes: {
+            ':story_id':        'goto_story',
+            ':story_id/:slug':  'goto_story'
+        },
+
+        goto_story: function(story_id, slug) {
+            init(story_id, slug); 
+        }
+    });
+
+    var router = new TranscriptRouter();
+    Backbone.history.start();
 });
