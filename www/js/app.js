@@ -5,7 +5,6 @@ $(function() {
 
     if (!story_id) {
         story_id = '167664846';
-        window.location.hash = '#' + story_id;
     }
 
     var $player = $('#pop-audio');
@@ -40,9 +39,13 @@ $(function() {
                 mp3: transcript['mp3_url'] 
             }).jPlayer("pause");
 
+            var previous_speaker = {};
+
 			$.each(transcript['turns'], function(k, turn) {
-                var speaker = transcript['speakers'][turn['speaker_id']];
-                var html = JST.turn($.extend({}, turn, { 'speaker': speaker }));
+                var speaker_id = turn['speaker_id'];
+                var speaker = transcript['speakers'][speaker_id];
+                var html = JST.turn($.extend({}, turn, { 'speaker': speaker, 'new_speaker': _.isUndefined(previous_speaker[speaker_id]) }));
+                previous_speaker[speaker_id] = true;
                 var $turn = $(html).appendTo($transcript);
 
                 $.each(turn['fragments'], function(k2, fragment) {
