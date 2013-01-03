@@ -30,17 +30,18 @@ $(function() {
 
 			$.each(transcript['turns'], function(k, turn) {
                 var speaker = transcript['speakers'][turn['speaker_id']];
+                var html = JST.turn($.extend({}, turn, { 'speaker': speaker }));
+                var $turn = $(html).appendTo($transcript);
 
                 $.each(turn['fragments'], function(k2, fragment) {
-                    var html = JST.fragment($.extend({}, fragment, { 'speaker': speaker }));
-                    var $fragment = $(html).appendTo($transcript);
+                    var $fragment = $turn.find('#fragment-' + fragment['slug']); 
 
                     pop.code({
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function(options) {         
                             window.location.hash = '#' + fragment['slug'];
-                            $('#transcript li').removeClass('active');
+                            $('#transcript p.quote').removeClass('active');
                             $fragment.addClass('active');
                             return false;
                         } 
@@ -48,7 +49,7 @@ $(function() {
                 });
 			});
 
-            $transcript.find('li').click(function() {
+            $transcript.find('p.quote').click(function() {
                 var offset = $(this).data('offset');
 
                 $player.jPlayer('play', offset);
