@@ -13,6 +13,7 @@ $(function() {
     var $transcript = $('#transcript');
     var $program_name = $('#program-name');
     var $play_link = $('#play-link');
+    var $datestamp = $('#story-meta').find('.dateblock');
 
     // Setup jplayer
     $player.jPlayer({
@@ -32,6 +33,7 @@ $(function() {
          */
 		$.getJSON('transcripts/' + story_id + '.json', function(transcript) {
             $title.text(transcript['title']);
+            $datestamp.text(transcript['program_date']);
             $program_name.text(transcript['program']);
 
             $player.jPlayer('setMedia', {
