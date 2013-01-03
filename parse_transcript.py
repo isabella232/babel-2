@@ -37,7 +37,7 @@ output = {
 timestamper = None
 transcript = ElementTree.fromstring(story['transcript_text'][0].encode('utf-8'))
 speaker_counts = {}
-last_speaker = None
+last_speaker_id = None
 
 for turn in transcript.iter('Turn'):
     speaker_id = int(turn.get('IdRef')) - 1
@@ -58,10 +58,16 @@ for turn in transcript.iter('Turn'):
 
         speaker_counts[speaker_id] = 0
 
-    output_turn = {
-        'speaker_id': speaker_id,
-        'fragments': []
-    }
+    # If we have two turns in sequence with the same speaker
+    # (Say, divided by a <SoundBite>)
+    # Then we merge them together
+    if speaker_id == last_speaker_id:
+        output_turn = output['turns'].pop()
+    else:
+        output_turn = {
+            'speaker_id': speaker_id,
+            'fragments': []
+        }
 
     for fragment in turn.iter('Fragment'):
         speaker_counts[speaker_id] += 1
@@ -76,6 +82,8 @@ for turn in transcript.iter('Turn'):
         })
 
     output['turns'].append(output_turn)
+
+    last_speaker_id = speaker_id
 
 for speaker in output['speakers']:
     if speaker['description'] == 'NPR':
