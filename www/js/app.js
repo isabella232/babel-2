@@ -56,7 +56,6 @@ $(function() {
 
             if (slug) {
                 var $fragment = $('#fragment-' + slug);
-                console.log($fragment);
                 $fragment.click();
             }
         });
