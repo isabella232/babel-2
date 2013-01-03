@@ -5,7 +5,9 @@
 body { font: 13px/1.35em Arial, Helvetica, sans-serif; color: #111; }
 
 h1, h2, h3, h4, h5, h6 { font-family: Georgia, serif; margin: 0 0 12px 0; line-height: 1.35em; }
-a, a:link, a:visited { color: #4774cc; }
+a, a:link, a:visited { color: #4774cc; text-decoration: none; }
+a:hover, a:active { color: #bccae5; text-decoration: none; }
+
 
 // Navbar
 .globalnav {
@@ -106,53 +108,62 @@ a, a:link, a:visited { color: #4774cc; }
 	margin: 0;
 	padding: 0;
 	color: #666;
-	width: 75%;
-	margin-left: 25%;
+	width: 70%;
+	margin-right: 30%;
 	margin-bottom: 30px;
 }
 #transcript li {
 	padding: 20px;
 	cursor: pointer;
 	position: relative;
+	border-left: 3px solid #fff;
+}
+#transcript li:hover {
+	border-color: #bccae5;
 }
 #transcript p {
 	margin: 0;
+	font-size: 14px;
 }
 #transcript p.speaker {
-	color: #999;
-	font-size: 18px;
+	color: #4774cc;
+	font-size: 16px;
 	margin-bottom: 11px;
 }
 #transcript .active {
-	background-color: #F7E39B;
+	background-color: #eee;
+	border-color: #bccae5;
 }
 #transcript .active .quote {
-	font-weight: bold;
+//	font-weight: bold;
 	color: #333;
 }
 #transcript .active p.speaker {
 	font-weight: normal;
-	color: #77631B;
+	color: #555;
 }
 #transcript .related-stories {
 	position: absolute;
-	top: 23px; left: 0;
-	margin-left: -300px;
-	width: 270px;
+	top: 23px; right: 0;
+	margin-right: -300px;
+	width: 240px;
 }
 #transcript .related-stories h4 {
 	color: #666;
-	text-transform: lowercase;
 	margin-bottom: 15px;
 	font: bold 12px Arial;
 }
 #transcript .related-stories ul {
 	list-style: none;
-	margin: 0; padding: 0;
+	margin: 0 0 0 12px;
+	padding: 0;
 }
 #transcript .related-stories li {
+	padding: 0;
+/*
 	padding: 0 0 0 16px;
 	background: url('http://media.npr.org/chrome/news/bullet_5x5.png') no-repeat left 6px;
+*/
 	font-size: 12px;
 	margin-bottom: 6px;
 }
