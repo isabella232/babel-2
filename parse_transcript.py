@@ -68,7 +68,7 @@ for speaker in output['speakers']:
     if speaker['description'] in ['HOST', 'BYLINE']:
         continue
 
-    if speaker['name'] in ['UNIDENTIFIED MAN', 'UNIDENTIFIED WOMAN']:
+    if speaker['name'].startswith('UNIDENTIFIED'):
         continue
     
     url =  'http://artemis-stage.npr.org/dma/api/stories/?name=' + speaker['name']
@@ -79,8 +79,6 @@ for speaker in output['speakers']:
 
     for story in data['hits']:
         story = story['_source'] 
-
-        print story['story_title']
 
         speaker['related'].append({
             'title': story['story_title'],
