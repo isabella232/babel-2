@@ -1,4 +1,4 @@
 <li data-offset="<%= offset %>">
-<p><%= speaker['name'] %><% if (speaker['description']) { %> (<%= speaker['description'] %>)<% } %></p>
+<p><% if (speaker['title']) { %><%= speaker['title'] %> <% } %><%= speaker['name'] %><% if (speaker['description']) { %> (<%= speaker['description'] %>)<% } %></p>
     <p><%= text %></p>
 </li>

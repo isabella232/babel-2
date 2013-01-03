@@ -29,6 +29,7 @@ transcript = ElementTree.fromstring(data['transcript_text'][0])
 output = {
     'id': transcript.get('Id'),
     'title': data['story_title'],
+    'program': data['program'][0],
     'mp3_url': data['audio_file_preview'][0],
     'speakers': [],
     'turns': []
@@ -42,7 +43,8 @@ for turn in transcript.iter('Turn'):
     if speaker:
         output['speakers'].append({
             'name': speaker,
-            'description': turn.get('Descriptor'),
+            'title': turn.get('Title'),
+            'description': turn.get('Descriptor')
         })
 
     output_turn = {
