@@ -4,6 +4,7 @@ $(function() {
     var $player = $('#pop-audio');
     var $title = $('h1');
     var $transcript = $('#transcript');
+    var $program_name = $('#program-name');
 
     // Setup jplayer
     $player.jPlayer({
@@ -23,6 +24,7 @@ $(function() {
          */
 		$.getJSON('transcript.json', function(transcript) {
             $title.text(transcript['title']);
+            $program_name.text(transcript['program']);
 
             $player.jPlayer('setMedia', {
                 mp3: transcript['mp3_url'] 

@@ -41,6 +41,8 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	border-right: 2px solid #e0e0e0;
 	padding-right: 164px;
 	width: 797px;
+	padding-bottom: 30px;
+	overflow: hidden;
 }
 .the-goods h1 {
 	font-size: 32px;
@@ -95,11 +97,14 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	position: absolute;
 	top: 0; left: 0; 
 }
+#program-name,
 .jp-current-time {
 	font-size: 11px;
 	font-weight: bold;
 	color: #999;
 }
+#program-name { float: left; }
+.jp-current-time { float: right; }
 
 
 // Transcript
@@ -160,12 +165,12 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 }
 #transcript .related-stories li {
 	padding: 0;
-/*
-	padding: 0 0 0 16px;
-	background: url('http://media.npr.org/chrome/news/bullet_5x5.png') no-repeat left 6px;
-*/
 	font-size: 12px;
-	margin-bottom: 6px;
+	margin-bottom: 10px;
+	border: none;
+}
+#transcript .related-stories li:hover {
+	border: none;
 }
 
 
@@ -179,19 +184,19 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 
 
 // Footer
-#footer ul.bottomlist {
-    clear: left;
-    padding: 15px 0;
-    margin: 0;
-    height: 1%;
-    overflow: hidden;
-    list-style: none;
+.footer {
+	height: 46px;
+	background: #fff;
+	border-top: 2px solid #e0e0e0;
+	position: relative;
 
-    li { float: left; font-size: 12px; margin-right: 15px; color: #999; }
-    li a { color: #999; }
-    li.help a, #footer ul.bottomlist li.contact a { color: #000; font-weight: bold; }
-    li.donate a { font-weight: bold; color: #F30; }
+    ul:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+    li.npr { background: url('@{img-root}/footer-left.png') no-repeat center left; text-indent: -999px; position: absolute; top: 0; left: 0; width: 520px; height: 44px; }
+    li.other { background: url('@{img-root}/footer-right.png') no-repeat center left; text-indent: -999px; position: absolute; top: 0; right: 0; width: 369px; height: 44px; }
+    li.npr > a { display: block; width: 100%; height: 44px; }
+    li.other > a { display: block; width: 100%; height: 44px; }
 }
+
 
 // Media queries
 @media (max-width: 480px) {
