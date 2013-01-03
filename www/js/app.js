@@ -1,4 +1,6 @@
 $(function() {
+    var slug = window.location.hash.replace('#', '');
+
     var $player = $('#pop-audio');
     var $title = $('h1');
     var $transcript = $('#transcript');
@@ -36,7 +38,8 @@ $(function() {
                     pop.code({
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
-                        onStart: function( options ) {         
+                        onStart: function(options) {         
+                            window.location.hash = '#' + fragment['slug'];
                             $('#transcript li').css('background-color', '#fff');
                             $fragment.css('background-color', '#fcc');
 
@@ -51,6 +54,12 @@ $(function() {
 
                 $player.jPlayer('play', offset);
             });
+
+            if (slug) {
+                var $fragment = $('#fragment-' + slug);
+                console.log($fragment);
+                $fragment.click();
+            }
         });
 	}
 

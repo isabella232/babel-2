@@ -36,8 +36,11 @@ output = {
 
 timestamper = None
 transcript = ElementTree.fromstring(story['transcript_text'][0].encode('utf-8'))
+speaker_counts = {}
+last_speaker = None
 
 for turn in transcript.iter('Turn'):
+    speaker_id = int(turn.get('IdRef')) - 1
     speaker = turn.get('Speaker')
 
     if speaker:
@@ -48,16 +51,21 @@ for turn in transcript.iter('Turn'):
             'related': []
         })
 
+        speaker_counts[speaker_id] = 0
+
     output_turn = {
-        'speaker_id': int(turn.get('IdRef')) - 1,
+        'speaker_id': speaker_id,
         'fragments': []
     }
 
     for fragment in turn.iter('Fragment'):
+        speaker_counts[speaker_id] += 1
+
         if not timestamper:
             timestamper = Timestamper(fragment.get('StartTime'))
 
         output_turn['fragments'].append({
+            'slug': '%s-%i' % (output['speakers'][speaker_id]['name'].lower().replace(' ', '-'), speaker_counts[speaker_id]),
             'offset': timestamper(fragment.get('StartTime')),
             'text': fragment.text
         })
