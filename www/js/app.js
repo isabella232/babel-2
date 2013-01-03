@@ -26,13 +26,19 @@ $(function() {
                 var speaker = transcript['speakers'][turn['speaker_id']];
 
                 $.each(turn['fragments'], function(k2, fragment) {
+                    var html = JST.fragment({
+                        'speaker': speaker,
+                        'text': fragment['text']
+                    });
+                    var $fragment = $(html).appendTo($('#transcript'));
+
                     pop.code({
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function( options ) {         
-                            $('#speaker').text(speaker['name']);
-                            $('#speaker-description').text(speaker['description']);
-                            $('#transcript').text(fragment['text']);
+                            $('#transcript li').css('background-color', '#fff');
+                            $fragment.css('background-color', '#fcc');
+
                             return false;
                         },
                         onEnd: function( options ) {}
