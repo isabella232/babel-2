@@ -98,6 +98,10 @@ for speaker in output['speakers']:
         except KeyError:
             continue
 
+        # Don't reference same story
+        if seamus_id == SEAMUS_ID:
+            continue
+
         speaker['related'].append({
             'title': story['story_title'],
             'url': 'http://npr.org/templates/story/story.php?storyId=' + seamus_id 
