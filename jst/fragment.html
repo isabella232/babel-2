@@ -1,4 +1,13 @@
 <li data-offset="<%= offset %>">
 <p><% if (speaker['title']) { %><%= speaker['title'] %> <% } %><%= speaker['name'] %><% if (speaker['description']) { %> (<%= speaker['description'] %>)<% } %></p>
     <p><%= text %></p>
+
+<% if (speaker['related'].length > 0) { %>
+<strong>Related links for this speaker:</strong>
+<ul class="related">
+<% _.each(speaker['related'], function(related) { %>
+<li><a href="<%= related['url'] %>"><%= related['title'] %></a></li>
+<% }); %>
+<% } %>
+</ul>
 </li>
