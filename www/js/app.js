@@ -26,10 +26,7 @@ $(function() {
                 var speaker = transcript['speakers'][turn['speaker_id']];
 
                 $.each(turn['fragments'], function(k2, fragment) {
-                    var html = JST.fragment({
-                        'speaker': speaker,
-                        'text': fragment['text']
-                    });
+                    var html = JST.fragment($.extend({}, fragment, { 'speaker': speaker }));
                     var $fragment = $(html).appendTo($('#transcript'));
 
                     pop.code({
@@ -45,6 +42,12 @@ $(function() {
                     });
                 });
 			});
+
+            $('#transcript li').click(function() {
+                var offset = $(this).data('offset');
+
+                $player.jPlayer('play', offset);
+            });
         });
 	}
 
