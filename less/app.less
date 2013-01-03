@@ -2,11 +2,10 @@
 @img-root: "../img";
 
 // General styles
-body { font: 13px/1.35em Arial, Helvetica, sans-serif; color: #333; }
+body { font: 13px/1.35em Arial, Helvetica, sans-serif; color: #111; }
 
 h1, h2, h3, h4, h5, h6 { font-family: Georgia, serif; margin: 0 0 12px 0; line-height: 1.35em; }
-a, a:link, a:visited { color: #000; }
-a:hover, a:active { color: #36c; }
+a, a:link, a:visited { color: #4774cc; }
 
 // Navbar
 .globalnav {
@@ -48,7 +47,17 @@ a:hover, a:active { color: #36c; }
 
 
 // Player
-.jp-controls .nav-btn i {
+.jp-audio {
+	margin-bottom: 30px;
+}
+.jp-interface {
+	height: 88px;
+	background: #e0e0e0;
+}
+.jp-controls {
+	float: left;
+}
+.jp-controls i {
 	display: block;
 	height: 88px;
 	width: 88px;
@@ -68,6 +77,31 @@ a:hover, a:active { color: #36c; }
 .jp-pause i:hover {
 	background-position: 0 -814px;
 }
+
+.jp-meta {
+	float: left;
+	height: 88px;
+	position: relative;
+	padding-left: 22px;
+	padding-top: 17px;
+	
+	h3 { font-family: Arial; font-size: 20px; color: #333; }
+}
+.jp-progress-container {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0; left: 0; 
+}
+
+
+// Transcript
+#transcript {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
 
 // Footer
 #footer ul.bottomlist {
