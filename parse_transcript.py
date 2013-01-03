@@ -2,16 +2,12 @@
 
 from datetime import datetime, date, time
 import json
-import os
 from xml.etree import ElementTree
 
 import requests
 
-SEAMUS_ID = '166217427'
+SEAMUS_ID = '166217431'
 ARTEMIS_API_URL = 'http://artemis.npr.org/dma/api/stories/seamus/%s' % SEAMUS_ID
-
-NPR_API_KEY = os.environ.get('NPR_API_KEY')
-NPR_API_URL = 'http://api.npr.org/query?id=%s&dateType=story&output=JSON&apiKey=%s' % (SEAMUS_ID, NPR_API_KEY)
 
 class Timestamper(object):
     def __init__(self, start):
@@ -31,31 +27,33 @@ data = json.loads(response.content)['hits'][0]['_source']
 transcript = ElementTree.fromstring(data['transcript_text'][0])
 
 output = {
+    'id': transcript.get('Id'),
     'title': data['story_title'],
-    'fragments': []
+    'mp3_url': data['audio_file_preview'][0],
+    'turns': []
 }
 
 timestamper = None
 
-for fragment in transcript.iter('Fragment'):
-    if not timestamper:
-        timestamper = Timestamper(fragment.get('StartTime'))
+for turn in transcript.iter('Turn'):
+    output_turn = {
+        'speaker': turn.get('Speaker'),
+        'speaker_id': turn.get('IdRef'),
+        'speaker_description': turn.get('Descriptor'),
+        'fragments': []
+    }
 
-    output['fragments'].append({
-        'offset': timestamper(fragment.get('StartTime')),
-        'text': fragment.text
-    })
+    for fragment in turn.iter('Fragment'):
+        if not timestamper:
+            timestamper = Timestamper(fragment.get('StartTime'))
 
-response = requests.get(NPR_API_URL)
+        output_turn['fragments'].append({
+            'offset': timestamper(fragment.get('StartTime')),
+            'text': fragment.text
+        })
 
-data = json.loads(response.content)
+    output['turns'].append(output_turn)
 
-m3u_url = data['list']['story'][0]['audio'][0]['format']['mp3'][0]['$text']
-
-response = requests.get(m3u_url)
-
-output['mp3_url'] = response.content
-
-with open('www/transcript.js', 'w') as f:
+with open('www/transcript.json', 'w') as f:
     json.dump(output, f)
 

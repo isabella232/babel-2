@@ -3,35 +3,38 @@ $(function() {
 
     $player.jPlayer({
         ready: function () {
-            $(this).jPlayer('setMedia', {
-                // TODO - load dynamically
-                mp3: "http://pd.npr.org/anon.npr-mp3/npr/me/2012/11/20121130_me_12.mp3"
-            }).jPlayer("pause");
-        },
-        play: function() { // To avoid both jPlayers playing together.
-            $(this).jPlayer("pauseOthers");
         },
         ended: function (event) {
             $(this).jPlayer("pause");
         },
         swfPath: "js",
-        supplied: "oga, mp3"
+        supplied: "mp3"
     });
 
     // associate jPlayer with Popcorn
     pop = Popcorn('#jp_audio_0');
 
 	function load_transcript() {
-		$.getJSON('transcript.json', function(data) {
-			$.each(data['fragments'], function(k, v) {
-                pop.code({
-                    start: v['offset'],
-                    end: v['offset'] + .5,
-                    onStart: function( options ) {         
-                        $('#transcript').text(v['text']);
-                        return false;
-                    },
-                    onEnd: function( options ) {}
+		$.getJSON('transcript.json', function(transcript) {
+            $('h1').text(transcript['title']);
+
+            $player.jPlayer('setMedia', {
+                mp3: transcript['mp3_url'] 
+            }).jPlayer("pause");
+
+			$.each(transcript['turns'], function(k, turn) {
+                $.each(turn['fragments'], function(k2, fragment) {
+                    pop.code({
+                        start: fragment['offset'],
+                        end: fragment['offset'] + .5,
+                        onStart: function( options ) {         
+                            $('#speaker').text(turn['speaker']);
+                            $('#speaker-description').text(turn['speaker_description']);
+                            $('#transcript').text(fragment['text']);
+                            return false;
+                        },
+                        onEnd: function( options ) {}
+                    });
                 });
 			});
         });
