@@ -29,6 +29,7 @@ output = {
     'id': story['web_container'][0]['web_seamus_id1'],
     'title': story['story_title'],
     'program': story['program'][0],
+    'program_date': story['episode']['show_date'],
     'mp3_url': story['audio_file_preview'][0],
     'speakers': [],
     'turns': []
