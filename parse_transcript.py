@@ -78,7 +78,7 @@ for turn in transcript.iter('Turn'):
     output['turns'].append(output_turn)
 
 for speaker in output['speakers']:
-    if speaker['description'] in ['HOST', 'BYLINE']:
+    if speaker['description'] == 'NPR':
         continue
 
     if speaker['name'].startswith('UNIDENTIFIED'):
