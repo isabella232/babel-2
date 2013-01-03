@@ -30,16 +30,23 @@ output = {
     'id': transcript.get('Id'),
     'title': data['story_title'],
     'mp3_url': data['audio_file_preview'][0],
+    'speakers': [],
     'turns': []
 }
 
 timestamper = None
 
 for turn in transcript.iter('Turn'):
+    speaker = turn.get('Speaker')
+
+    if speaker:
+        output['speakers'].append({
+            'name': speaker,
+            'description': turn.get('Descriptor'),
+        })
+
     output_turn = {
-        'speaker': turn.get('Speaker'),
-        'speaker_id': turn.get('IdRef'),
-        'speaker_description': turn.get('Descriptor'),
+        'speaker_id': int(turn.get('IdRef')) - 1,
         'fragments': []
     }
 

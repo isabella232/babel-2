@@ -23,13 +23,15 @@ $(function() {
             }).jPlayer("pause");
 
 			$.each(transcript['turns'], function(k, turn) {
+                var speaker = transcript['speakers'][turn['speaker_id']];
+
                 $.each(turn['fragments'], function(k2, fragment) {
                     pop.code({
                         start: fragment['offset'],
                         end: fragment['offset'] + .5,
                         onStart: function( options ) {         
-                            $('#speaker').text(turn['speaker']);
-                            $('#speaker-description').text(turn['speaker_description']);
+                            $('#speaker').text(speaker['name']);
+                            $('#speaker-description').text(speaker['description']);
                             $('#transcript').text(fragment['text']);
                             return false;
                         },
