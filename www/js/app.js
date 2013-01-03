@@ -32,6 +32,7 @@ $(function() {
             }).jPlayer("pause");
 
             Popcorn.destroy(pop);
+            pop = Popcorn('#jp_audio_0');
 
             var previous_speaker = {};
 
