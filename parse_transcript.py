@@ -44,10 +44,15 @@ for turn in transcript.iter('Turn'):
     speaker = turn.get('Speaker')
 
     if speaker:
+        description = turn.get('Descriptor')
+
+        if description in ['HOST', 'BYLINE']:
+            description = 'NPR'
+
         output['speakers'].append({
             'name': speaker,
             'title': turn.get('Title'),
-            'description': turn.get('Descriptor'),
+            'description': description,
             'related': []
         })
 
@@ -88,9 +93,14 @@ for speaker in output['speakers']:
     for story in data['hits']:
         story = story['_source'] 
 
+        try:
+            seamus_id = story['web_container'][0]['web_seamus_id1']
+        except KeyError:
+            continue
+
         speaker['related'].append({
             'title': story['story_title'],
-            'url': 'http://npr.org/templates/story/story.php?storyId=' + story['web_container'][0]['web_seamus_id1']
+            'url': 'http://npr.org/templates/story/story.php?storyId=' + seamus_id 
         })
 
 
