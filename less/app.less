@@ -2,7 +2,7 @@
 @img-root: "../img";
 
 // General styles
-body { font: 13px/1.35em Arial, Helvetica, sans-serif; color: #111; }
+body { font: 13px/1.35em Arial, Helvetica, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
 
 h1, h2, h3, h4, h5, h6 { font-family: Georgia, serif; margin: 0 0 12px 0; line-height: 1.35em; }
 a, a:link, a:visited { color: #4774cc; text-decoration: none; }
@@ -89,7 +89,8 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	position: relative;
 	padding-left: 22px;
 	
-	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; }
+	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; color: #6d8ac4; cursor: pointer; }
+	h3:hover, h3:active { color: #bccae5; }
 }
 .jp-progress-container {
 	height: 100%;
@@ -116,33 +117,27 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	width: 70%;
 	margin-right: 30%;
 	margin-bottom: 30px;
+
+	li { position: relative; }
+	p { margin: 0; font-size: 14px; }
+	p.speaker { color: #4774cc; font-size: 13px; padding-left: 10px; padding-top: 15px; }
 }
-#transcript li p.quote {
+#transcript p.quote {
 	padding: 10px;
 	cursor: pointer;
 	position: relative;
 	border-left: 3px solid #fff;
-    margin-bottom: 11px;
 }
-#transcript li p.quote:hover {
+#transcript p.quote:hover {
 	border-color: #bccae5;
-}
-#transcript p {
-	margin: 0;
-	font-size: 14px;
-}
-#transcript p.speaker {
-	color: #4774cc;
-	font-size: 16px;
-	margin-bottom: 11px;
 }
 #transcript .active {
 	background-color: #eee;
 	border-color: #bccae5;
 }
 #transcript .active.quote {
-//	font-weight: bold;
 	color: #333;
+	border-color: #bccae5;
 }
 #transcript .active p.speaker {
 	font-weight: normal;
@@ -150,7 +145,7 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 }
 #transcript .related-stories {
 	position: absolute;
-	top: 23px; right: 0;
+	top: 17px; right: 0;
 	margin-right: -300px;
 	width: 240px;
 }

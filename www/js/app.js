@@ -5,6 +5,7 @@ $(function() {
     var $title = $('h1');
     var $transcript = $('#transcript');
     var $program_name = $('#program-name');
+    var $play_link = $('#play-link');
 
     // Setup jplayer
     $player.jPlayer({
@@ -62,6 +63,10 @@ $(function() {
                 $fragment.click();
             }
         });
+        
+        $play_link.click(function() {
+			$player.jPlayer('play', 0);
+		});
 	}
 
     init();
