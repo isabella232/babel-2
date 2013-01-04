@@ -56,6 +56,11 @@ $(function() {
 
                             $('#transcript p.quote').removeClass('active');
                             $fragment.addClass('active');
+
+							$("html, body").animate({
+								scrollTop: $fragment.offset().top - 115
+							}, 1000);
+
                             return false;
                         } 
                     });
