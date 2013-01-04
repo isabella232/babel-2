@@ -118,6 +118,21 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	z-index: 900;
 
 	.jp-audio { margin-top: 0; }
+	.jp-interface { height: 44px; }
+	.jp-meta { height: 44px; margin-left: 44px; }
+	.jp-controls i { width: 44px; height: 44px; }
+	.jp-play i { background-position: 0 0; }
+	.jp-play i:hover { background-position: 0 -55px; }
+	.jp-pause i { background-position: 0 -456px; }
+	.jp-pause i:hover { background-position: 0 -509px; }
+
+	.jp-info { 
+		padding-top: 10px;
+		
+		h3 { padding-top: 0; font-size: 16px; float: left; }
+		h3, #program-name { padding-left: 22px; }
+		#program-name, .jp-current-time { padding-top: 5px; }
+	}
 }
 
 
