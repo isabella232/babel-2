@@ -54,11 +54,13 @@ $(function() {
                         onStart: function(options) {
                             router.navigate('#' + story_id + '/' + fragment['slug']);
 
+                            $('#transcript li').removeClass('speaking');
                             $('#transcript p.quote').removeClass('active');
                             $fragment.addClass('active');
+                            $fragment.parent().addClass('speaking');
 
 							$("html, body").animate({
-								scrollTop: $fragment.offset().top - 115
+								scrollTop: $fragment.offset().top - $(window).height() / 2 + $fragment.height() / 2 + 15
 							}, 1000);
 
                             return false;
