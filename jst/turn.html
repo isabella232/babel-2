@@ -1,5 +1,5 @@
 <li>
-    <p class="speaker"><% if (speaker['title']) { %><%= speaker['title'] %> <% } %><%= speaker['name'] %><% if (speaker['description']) { %> (<%= speaker['description'] %>)<% } %></p>
+    <p class="speaker"><% if (speaker['title']) { %><%= speaker['title'] %> <% } %><%= speaker['name'] %><% if (speaker['description']) { %> <span class="speaker-desc"><%= speaker['description'] %></span><% } %></p>
 
     <% if (speaker['related'].length > 0 && new_speaker) { %>
         <div class="related-stories">

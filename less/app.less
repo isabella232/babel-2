@@ -63,7 +63,7 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 
 // Player
 .jp-audio {
-	margin: 30px 0;
+	margin: 30px 0 10px 0;
 }
 .jp-interface {
 	height: 88px;
@@ -97,11 +97,11 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	left: 0;
 	width: 100%;
 	
-	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 21px; color: #6d8ac4; cursor: pointer; }
+	h3 { font-family: Arial; font-size: 20px; color: #333; margin-bottom: 5px; padding-top: 19px; color: #6d8ac4; cursor: pointer; }
 	h3:hover, h3:active { color: #bccae5; }
 	h3, #program-name { padding-left: 22px; }
-	#program-name { float: left; font-size: 11px; font-weight: bold; color: #999; }
-	.jp-current-time { float: right; font-size: 11px; font-weight: bold; color: #999; padding-right: 22px; }
+	#program-name { float: left; font-size: 12px; font-weight: bold; color: #999; }
+	.jp-current-time { float: right; font-size: 12px; font-weight: bold; color: #999; padding-right: 22px; }
 }
 .jp-progress-container {
 	position: relative;
@@ -110,7 +110,7 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 
 	.jp-progress {  width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 999; }
 	.jp-seek-bar, .jp-play-bar { height: 100%; }
-	.jp-play-bar { background-color: #bccae5; opacity: .3; }
+	.jp-play-bar { background-color: #bccae5; opacity: .4; }
 }
 
 
@@ -119,25 +119,26 @@ a:hover, a:active { color: #bccae5; text-decoration: none; }
 	list-style: none;
 	margin: 0 30% 30px 0;
 	padding: 0;
-	color: #666;
+	color: #333;
 	width: 70%;
 	margin-right: 30%;
 
 	li { position: relative; }
 
 	p { margin: 0; font-size: 14px; }
-	p.speaker { color: #999; font-size: 13px; padding-left: 12px; padding-top: 15px; }
- 	p.quote { padding: 10px; cursor: pointer; position: relative; border-left: 3px solid #fff; }
+	p.speaker { color: #666; font-size: 14px; padding: 20px 0 0 17px; }
+	p.speaker .speaker-desc { color: #999; font-size: 11px; padding-left: 5px; }
+ 	p.quote { padding: 10px 15px; cursor: pointer; position: relative; border-left: 3px solid #fff; }
 	p.quote:hover { border-color: #bccae5; }
-	p.quote.active { background-color: #eee; border-color: #bccae5; color: #333; }
+	p.quote.active { background-color: #eee; border-color: #bccae5; color: #111; }
 }
 #transcript .related-stories {
 	position: absolute;
-	top: 17px; right: 0;
+	top: 20px; right: 0;
 	margin-right: -300px;
 	width: 240px;
 	
-	h4 { color: #666; margin-bottom: 15px; font: bold 12px Arial; }
+	h4 { color: #999; margin-bottom: 15px; font: bold 12px Arial; }
 	ul { list-style: none; margin: 0 0 0 12px; padding: 0; }
 	li { padding: 0; font-size: 12px; margin-bottom: 10px; border: none; }
 	li:hover { border: none; }
