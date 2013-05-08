@@ -1,0 +1,63 @@
+{% extends '_base.html' %}
+
+{% block extra_head_js %}
+    {{ JS.push('js/lib/jquery.jplayer.js') }}
+    {{ JS.push('js/lib/popcorn-complete.js') }}
+{% endblock %}
+
+{% block content %}
+<h2>NPR Transcript</h2>
+<h1>{{ PROJECT_NAME }}</h1>
+<div id="story-meta"><div class="dateblock"></div></div>
+
+<div id="audio" data-spy="affix" data-offset-top="250">
+    <div id="pop-audio" class="jp-jplayer"></div>
+
+    <div id="jp_container_1" class="jp-audio">
+        <div class="jp-type-single">
+        
+            <div class="jp-gui jp-interface">
+                <div class="jp-controls">
+                    <a href="javascript:;" class="jp-play nav-btn" tabindex="1"><i>play</i></a>
+                    <a href="javascript:;" class="jp-pause nav-btn" tabindex="1" style="display: none;"><i>pause</i></a>
+                </div>
+                
+                <div class="jp-meta">
+					<div class="jp-progress-container">
+						<div class="jp-progress">
+							<div class="jp-seek-bar">
+								<div class="jp-play-bar"></div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="jp-info">
+						<h3 id="play-link">Listen To The Story</h3>
+						<div id="program-name"></div>
+						<div class="jp-current-time"></div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul id="transcript"></ul>
+
+<div class="footnote">
+	<p>Copyright &copy; 2013 NPR. All rights reserved. No quotes from the materials contained herein may be used in any media without attribution to NPR. This transcript is provided for personal, noncommercial use only, pursuant to our Terms of Use. Any other use requires NPR's prior permission. Visit our <a href="http://www.npr.org/about/permissioninfo.html">permissions page</a> for further information.</p>
+	<p>NPR transcripts are created on a rush deadline by a contractor for NPR, and accuracy and availability may vary. This text may not be in its final form and may be updated or revised in the future. Please be aware that the authoritative record of NPR's programming is the audio.</p>
+</div>
+
+<div id="jump-links">
+	<h3>Sample Stories</h3>
+	<ul>
+		<li><a href="#167664846">In A French Village, Protection From The Apocalypse</a></li>
+		<li><a href="#166217431">U.N.'s Palestinian Vote: Symbolic Or Gamechanger?</a></li>
+		<li><a href="#168197017">What A Former FBI Hostage Negotiator Can Teach Us About The Fiscal Cliff</a></li>
+	</ul>
+    <a href="http://twitter.com/nprapps"><img class="bling" src="img/nprapps.png" /></a>
+    <p><strong>This transcript page is a serendipity day experiment by: <a href="http://twitter.com/alykat">Alyson Hurt</a>, <a href="http://twitter.com/jeremybowers">Jeremy Bowers</a> and <a href="http://twitter.com/onyxfish">Christopher Groskopf</a>. (<a href="mailto:nprapps@npr.org">Email us</a>)</strong></p>
+</div>
+
+{% endblock %}

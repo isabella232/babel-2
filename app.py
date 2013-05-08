@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import csv
 from mimetypes import guess_type
 
 import envoy
@@ -15,6 +14,10 @@ app = Flask(app_config.PROJECT_NAME)
 @app.route('/index.html')
 def simple():
     return render_template('index.html', **make_context())
+
+@app.route('/sami.html')
+def sami():
+    return render_template('sami.html', **make_context());
 
 # Render LESS files on-demand
 @app.route('/less/<string:filename>')
