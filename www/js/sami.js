@@ -22,10 +22,10 @@ $(function() {
         /*
          * Fetch the transcript json and render it.
          */
-		$.getJSON('transcripts/' + story_id + '.json', function(transcript) {
+		$.getJSON('transcripts/' + story_id + '.smi.json', function(transcript) {
             $title.text(transcript['title']);
-            $datestamp.text(transcript['program_date']);
-            $program_name.text(transcript['program']);
+            //$datestamp.text(transcript['program_date']);
+            //$program_name.text(transcript['program']);
 
             $player.jPlayer('setMedia', {
                 mp3: transcript['mp3_url'] 
@@ -34,50 +34,41 @@ $(function() {
             Popcorn.destroy(pop);
             pop = Popcorn('#jp_audio_0');
 
-            var previous_speaker = {};
-
             $transcript.empty();
 
-			$.each(transcript['turns'], function(k, turn) {
-                var speaker_id = turn['speaker_id'];
-                var speaker = transcript['speakers'][speaker_id];
-                var html = JST.turn($.extend({}, turn, { 'speaker': speaker, 'new_speaker': _.isUndefined(previous_speaker[speaker_id]) }));
-                previous_speaker[speaker_id] = true;
-                var $turn = $(html).appendTo($transcript);
+			$.each(transcript['syncs'], function(k, sync) {
+                var html = JST.sync($.extend({}, sync));
+                var $sync = $(html).appendTo($transcript);
 
-                $.each(turn['fragments'], function(k2, fragment) {
-                    var $fragment = $turn.find('#fragment-' + fragment['slug']); 
+                console.log(sync['offset']);
 
-                    pop.code({
-                        start: fragment['offset'],
-                        end: fragment['offset'] + .5,
-                        onStart: function(options) {
-                            router.navigate('#' + story_id + '/' + fragment['slug']);
+                pop.code({
+                    start: sync['offset'] / 1000,
+                    end: sync['offset'] / 1000 + 500,
+                    onStart: function(options) {
+                        console.log('start');
+                        router.navigate('#' + story_id + '/' + sync['slug']);
 
-                            $('#transcript li').removeClass('speaking');
-                            $('#transcript p.quote').removeClass('active');
-                            $fragment.addClass('active');
-                            $fragment.parent().addClass('speaking');
+                        $sync.addClass('active');
 
-							$("html, body").animate({
-								scrollTop: $fragment.offset().top - $(window).height() / 2 + $fragment.height() / 2 + 15
-							}, 1000);
+                        $("html, body").animate({
+                            scrollTop: $sync.offset().top - $(window).height() / 2 + $sync.height() / 2 + 15
+                        }, 1000);
 
-                            return false;
-                        } 
-                    });
+                        return false;
+                    } 
                 });
 			});
 
-            $transcript.find('p.quote').click(function() {
+            $transcript.find('li').click(function() {
                 var offset = $(this).data('offset');
 
                 $player.jPlayer('play', offset);
             });
 
             if (slug) {
-                var $fragment = $('#fragment-' + slug);
-                $fragment.click();
+                var $sync = $('#sync-' + slug);
+                $sync.click();
             }
         });
         
@@ -90,12 +81,12 @@ $(function() {
         routes: {
             '':                 'goto_story',
             ':story_id':        'goto_story',
-            ':story_id/:slug':  'goto_story'
+            ':story_id/:slug':  'goto_story',
         },
 
         goto_story: function(story_id, slug) {
             if (!story_id) {
-                story_id = '167664846';
+                story_id = 'latinousa';
             }
 
             init(story_id, slug); 

@@ -3,7 +3,7 @@
 import json
 from bs4 import BeautifulSoup
 
-FILENAMES = ['LatinoSMICPC-Fixed.smi'] 
+FILENAMES = ['latinousa.smi'] 
 
 def generate_transcript_json(filename):
     with open(filename) as f:
@@ -11,6 +11,7 @@ def generate_transcript_json(filename):
 
     output = {
         'title': filename,
+        'mp3_url': 'audio/LatinoUSA.mp3',
         'syncs': []
     }
 
