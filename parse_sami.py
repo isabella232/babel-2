@@ -3,26 +3,68 @@
 import json
 from bs4 import BeautifulSoup
 
-FILENAMES = ['latinousa.smi'] 
+FILENAMES = ['TEDRadioHour.smi'] 
 
 def generate_transcript_json(filename):
     with open(filename) as f:
-        soup = BeautifulSoup(f.read()) 
+        text = f.readlines()
+
+    normalized = []
+
+    for line in text:
+        line = line.strip()
+
+        if line.startswith('<Sync'):
+            line += '</P></Sync>'
+
+        normalized.append(line) 
+
+    soup = BeautifulSoup('\n'.join(normalized)) 
 
     output = {
         'title': filename,
-        'mp3_url': 'audio/LatinoUSA.mp3',
-        'syncs': []
+        'mp3_url': 'audio/TEDRadioHour.mp3',
+        'turns': []
+    }
+
+    turn = {
+        'speaker': None,
+        'fragments': [] 
     }
 
     for sync in soup.find_all('sync'):
         start = int(sync.get('start'))
+        text = ' '.join(sync.stripped_strings)
 
-        output['syncs'].append({
+        if not text:
+            continue
+
+        if text.startswith('('):
+            paren = text.index(')')
+
+            text = text[paren + 1:].strip()
+
+        if text.startswith('>>'):
+            colon = text.index(':')
+
+            speaker = text[2:colon]
+            text = text[colon + 1:]
+
+            if turn['fragments']:
+                output['turns'].append(turn)
+
+            turn = {
+                'speaker': speaker,
+                'fragments': []
+            }
+
+        turn['fragments'].append({
             'slug': 'sync-%i' % start,
             'offset': start,
-            'text': sync.text
+            'text': text
         })
+
+    output['turns'].append(turn)
 
     with open('www/transcripts/%s.json' % filename, 'w') as f:
         json.dump(output, f)

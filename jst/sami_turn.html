@@ -1,0 +1,8 @@
+<li>
+<p class="speaker"><i class="icon icon-volume-up"></i> <%= speaker %></p>
+
+    <% _.each(fragments, function(fragment) { %>
+        <span id="fragment-<%= fragment['slug'] %>" class="quote" data-offset="<%= fragment['offset'] %>"><%= fragment['text'] %></span>
+
+    <% }); %>
+</li>

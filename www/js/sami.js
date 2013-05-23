@@ -36,39 +36,44 @@ $(function() {
 
             $transcript.empty();
 
-			$.each(transcript['syncs'], function(k, sync) {
-                var html = JST.sync($.extend({}, sync));
-                var $sync = $(html).appendTo($transcript);
+			$.each(transcript['turns'], function(k, turn) {
+                var html = JST.sami_turn($.extend({}, turn));
+                var $turn = $(html).appendTo($transcript);
 
-                console.log(sync['offset']);
+                _.each(turn['fragments'], function(fragment) {
+                    pop.code({
+                        start: fragment['offset'] / 1000,
+                        end: fragment['offset'] / 1000 + 500,
+                        onStart: function(options) {
+                            router.navigate('#' + story_id + '/' + fragment['slug']);
 
-                pop.code({
-                    start: sync['offset'] / 1000,
-                    end: sync['offset'] / 1000 + 500,
-                    onStart: function(options) {
-                        console.log('start');
-                        router.navigate('#' + story_id + '/' + sync['slug']);
+                            var $fragment = $('#fragment-' + fragment['slug']);
 
-                        $sync.addClass('active');
+                            $('span.quote.active').removeClass('active');
+                            $fragment.addClass('active');
 
-                        $("html, body").animate({
-                            scrollTop: $sync.offset().top - $(window).height() / 2 + $sync.height() / 2 + 15
-                        }, 1000);
+                            $("html, body").animate({
+                                scrollTop: $fragment.offset().top - $(window).height() / 2 + $fragment.height() / 2 + 15
+                            }, 1000);
 
-                        return false;
-                    } 
+                            return false;
+                        } 
+                    });
                 });
 			});
 
-            $transcript.find('li').click(function() {
-                var offset = $(this).data('offset');
+            $transcript.find('span.quote').click(function() {
+                var offset = parseInt($(this).data('offset')) / 1000;
 
+                console.log(offset);
+
+                $player.jPlayer('pause');
                 $player.jPlayer('play', offset);
             });
 
             if (slug) {
-                var $sync = $('#sync-' + slug);
-                $sync.click();
+                var $fragment = $('#fragment-' + slug);
+                $fragment.click();
             }
         });
         
@@ -86,7 +91,7 @@ $(function() {
 
         goto_story: function(story_id, slug) {
             if (!story_id) {
-                story_id = 'latinousa';
+                story_id = 'TEDRadioHour';
             }
 
             init(story_id, slug); 
